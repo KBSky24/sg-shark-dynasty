@@ -1,0 +1,898 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="SG Shark Dynasty League charter: rules, calendar, lottery, money and expansion.">
+<title>SG Shark Dynasty League</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+/* Layout: a dark arena dashboard. One column of "panels", each a section of the charter, with data drawn as
+   court-line graphics. Gold is the ball; steel-teal is the shark. Dark-first; light theme is ivory + navy. */
+:root{
+  color-scheme:dark;
+  --ground:#0A0E14;
+  --court:#111821;
+  --panel:#151D28;
+  --panel-2:#1B2532;
+  --line:#26313F;
+  --line-soft:#1E2833;
+  --ink:#EEF1F5;
+  --ink-2:#B9C3CF;
+  --muted:#7E8A99;
+  --gold:#E8A33C;
+  --gold-ink:#F2BC63;
+  --gold-2:#B97D24;
+  --gold-soft:rgba(232,163,60,.12);
+  --shark:#4DA6C9;
+  --shark-ink:#7CC4E0;
+  --shark-soft:rgba(77,166,201,.12);
+  --good:#4FBF8F;
+  --warn:#E0B44C;
+  --bad:#E06A5C;
+  --shadow:0 1px 0 rgba(255,255,255,.03) inset,0 12px 32px -20px rgba(0,0,0,.9);
+  --f-display:'Barlow Condensed','Arial Narrow',Arial,sans-serif;
+  --f-body:'Barlow','Helvetica Neue',Arial,sans-serif;
+  --f-mono:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
+  --pad:clamp(16px,4vw,40px);
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    color-scheme:light;
+    --ground:#F3EFE6;
+    --court:#EBE5D8;
+    --panel:#FFFDF8;
+    --panel-2:#F6F1E6;
+    --line:#D9D1C1;
+    --line-soft:#E6DFD0;
+    --ink:#141A22;
+    --ink-2:#3C4652;
+    --muted:#6F7A87;
+    --gold:#B8741A;
+    --gold-ink:#96590F;
+    --gold-2:#D9A24F;
+    --gold-soft:rgba(184,116,26,.12);
+    --shark:#1F6E8C;
+    --shark-ink:#175A73;
+    --shark-soft:rgba(31,110,140,.12);
+    --good:#1F7A56;
+    --warn:#8A5D0F;
+    --bad:#A33A2E;
+    --shadow:0 1px 2px rgba(20,26,34,.06),0 10px 28px -20px rgba(20,26,34,.35);
+  }
+}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --ground:#F3EFE6;
+  --court:#EBE5D8;
+  --panel:#FFFDF8;
+  --panel-2:#F6F1E6;
+  --line:#D9D1C1;
+  --line-soft:#E6DFD0;
+  --ink:#141A22;
+  --ink-2:#3C4652;
+  --muted:#6F7A87;
+  --gold:#B8741A;
+  --gold-ink:#96590F;
+  --gold-2:#D9A24F;
+  --gold-soft:rgba(184,116,26,.12);
+  --shark:#1F6E8C;
+  --shark-ink:#175A73;
+  --shark-soft:rgba(31,110,140,.12);
+  --good:#1F7A56;
+  --warn:#8A5D0F;
+  --bad:#A33A2E;
+  --shadow:0 1px 2px rgba(20,26,34,.06),0 10px 28px -20px rgba(20,26,34,.35);
+}
+
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:var(--pad);padding-block:0 96px}
+p{margin:0 0 .8em}
+a{color:var(--gold-ink);text-underline-offset:3px;text-decoration-thickness:1px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+strong{font-weight:600;color:var(--ink)}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:.01em}
+ul{margin:0;padding-left:1.15em}
+li{margin:0 0 .4em}
+li::marker{color:var(--gold)}
+.mono{font-family:var(--f-mono)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding:clamp(36px,6vw,72px) 0 0;overflow:hidden}
+.hero .court{position:absolute;inset:0;pointer-events:none;color:var(--gold);opacity:.14}
+.hero .court svg{position:absolute;right:-8%;top:-10px;width:min(560px,70vw);height:auto}
+.brand{display:flex;align-items:center;gap:14px;position:relative}
+.brand .fin{width:44px;height:44px;flex:none;color:var(--shark)}
+.brand .name{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.brand .name b{display:block;color:var(--shark-ink);font-weight:600;font-size:12.5px;margin-top:2px}
+h1{position:relative;font-size:clamp(3rem,9vw,6rem);font-weight:800;line-height:.92;text-transform:uppercase;margin:26px 0 0}
+h1 span{display:block;color:var(--gold);font-weight:700}
+.stand{position:relative;max-width:58ch;color:var(--ink-2);font-size:clamp(1rem,2vw,1.15rem);margin-top:18px}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:34px;position:relative}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px 14px 12px;box-shadow:var(--shadow)}
+.tile dt{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.tile dd{margin:6px 0 0;font-family:var(--f-display);font-weight:700;font-size:1.6rem;line-height:1;color:var(--gold-ink)}
+.tile dd small{display:block;font-family:var(--f-body);font-weight:500;font-size:.8rem;color:var(--ink-2);margin-top:5px;letter-spacing:0}
+
+.legend{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:22px;font-size:.85rem;color:var(--ink-2)}
+.legend .b{display:inline-flex;align-items:center;gap:7px}
+.badge{display:inline-block;font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:3px;border:1px solid;line-height:1.3;vertical-align:middle}
+.badge.ballot{color:var(--gold-ink);border-color:var(--gold);background:var(--gold-soft)}
+.badge.voted{color:var(--shark-ink);border-color:var(--shark);background:var(--shark-soft)}
+.badge.verified{color:var(--good);border-color:var(--good)}
+.badge.note{color:var(--muted);border-color:var(--line)}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;margin-top:30px;background:var(--ground);border-bottom:1px solid var(--line);padding:10px 0}
+.nav ol{list-style:none;margin:0;padding:0;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.nav ol::-webkit-scrollbar{display:none}
+.nav a{flex:none;font-family:var(--f-display);font-weight:600;font-size:.95rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2);text-decoration:none;padding:6px 10px;border-radius:4px;border:1px solid transparent}
+.nav a:hover{color:var(--gold-ink);border-color:var(--line)}
+.nav a b{font-family:var(--f-mono);font-size:.7rem;color:var(--gold);margin-right:6px;font-weight:600}
+
+/* ---------- panels ---------- */
+.panel{margin-top:clamp(40px,6vw,64px);scroll-margin-top:70px}
+.p-head{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:end;border-bottom:1px solid var(--line);padding-bottom:14px}
+.p-num{font-family:var(--f-display);font-weight:800;font-size:clamp(2.6rem,6vw,4rem);line-height:.85;color:var(--gold);opacity:.9}
+.p-head h2{font-size:clamp(1.6rem,3.6vw,2.3rem);font-weight:700;text-transform:uppercase;line-height:1}
+.p-head p{margin:6px 0 0;color:var(--muted);font-size:.92rem;max-width:64ch}
+.grid{display:grid;gap:14px;margin-top:20px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:16px 18px;box-shadow:var(--shadow);min-width:0}
+.card h3{font-size:1.15rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px}
+.card h3 .rn{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;color:var(--gold);display:block;margin-bottom:4px;font-weight:600}
+.card p:last-child,.card ul:last-child{margin-bottom:0}
+.card.ballot{border-color:var(--gold);background:linear-gradient(180deg,var(--gold-soft),transparent 60%),var(--panel)}
+.card.voted{border-color:var(--shark);background:linear-gradient(180deg,var(--shark-soft),transparent 60%),var(--panel)}
+.card.soft{background:var(--panel-2);box-shadow:none}
+.why{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);color:var(--ink-2);font-size:.9rem}
+.why b{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:3px;font-weight:600}
+.callout{border-left:3px solid var(--shark);background:var(--shark-soft);border-radius:0 6px 6px 0;padding:12px 16px;margin-top:14px;color:var(--ink-2);font-size:.93rem}
+.callout b{color:var(--shark-ink)}
+figure{margin:0}
+figcaption{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.scroll{overflow-x:auto}
+svg.fig{display:block;width:100%;height:auto;max-width:100%}
+
+/* ---------- season strip (§0) ---------- */
+.strip{display:grid;grid-template-columns:repeat(12,minmax(58px,1fr));gap:4px;margin-top:18px;min-width:700px}
+.m{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:4px;padding:8px 6px 8px;min-height:92px;display:flex;flex-direction:column;gap:6px}
+.m .mo{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.m .ph{font-family:var(--f-display);font-weight:700;font-size:.95rem;line-height:1.05;text-transform:uppercase}
+.m .ev{font-size:.78rem;color:var(--ink-2);line-height:1.25}
+.m.season{border-top:3px solid var(--shark)}
+.m.off{border-top:3px solid var(--gold)}
+.m.hot .ph{color:var(--gold-ink)}
+
+/* ---------- roster slots ---------- */
+.slots{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.slot{font-family:var(--f-mono);font-size:11.5px;font-weight:500;padding:6px 9px;border-radius:3px;border:1px solid var(--line);color:var(--ink-2);background:var(--panel-2)}
+.slot.start{border-color:var(--gold);color:var(--gold-ink);background:var(--gold-soft)}
+.slot.taxi{border-style:dashed;border-color:var(--shark);color:var(--shark-ink)}
+.rlbl{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+/* ---------- tables ---------- */
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{padding:9px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line-soft)}
+thead th{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line)}
+tbody tr:last-child td{border-bottom:none}
+td.k{font-weight:600;white-space:nowrap}
+td.n,th.n{font-family:var(--f-mono);font-size:.84rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--panel);margin-top:14px}
+.tbl table{min-width:480px}
+
+/* ---------- snake grid (§3) ---------- */
+.snake{display:grid;grid-template-columns:70px repeat(12,1fr) 40px;gap:4px;align-items:center;min-width:720px;margin-top:14px}
+.snake .r{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.snake .c{font-family:var(--f-mono);font-size:12px;text-align:center;padding:7px 0;border-radius:3px;background:var(--panel-2);border:1px solid var(--line-soft);color:var(--ink-2)}
+.snake .c.hi{background:var(--gold-soft);border-color:var(--gold);color:var(--gold-ink);font-weight:600}
+.snake .d{font-size:16px;color:var(--gold);text-align:center}
+
+/* ---------- timeline ---------- */
+.tl{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:0}
+.tl li{display:grid;grid-template-columns:120px 1fr auto;gap:14px;padding:11px 0;border-bottom:1px solid var(--line-soft);align-items:start;margin:0}
+.tl li:last-child{border-bottom:none}
+.tl .when{font-family:var(--f-display);font-weight:700;font-size:1.05rem;color:var(--gold-ink);text-transform:uppercase;letter-spacing:.03em;line-height:1.15}
+.tl .when small{display:block;font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;color:var(--muted);font-weight:400;margin-top:2px}
+.tl .what b{display:block;font-family:var(--f-display);font-size:1.02rem;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.tl .what span{color:var(--ink-2);font-size:.9rem}
+.tl .cost{font-family:var(--f-mono);font-size:.74rem;color:var(--muted);white-space:nowrap;padding-top:4px}
+
+/* ---------- bars ---------- */
+.bars{display:grid;gap:7px;margin-top:12px}
+.bar{display:grid;grid-template-columns:150px 1fr 54px;gap:10px;align-items:center}
+.bar .l{font-family:var(--f-display);font-weight:600;font-size:.98rem;text-transform:uppercase;letter-spacing:.03em;line-height:1.1}
+.bar .t{height:14px;background:var(--panel-2);border-radius:3px;overflow:hidden;display:flex}
+.bar .f{height:100%;background:var(--gold);border-radius:3px}
+.bar .f2{height:100%;background:var(--shark);border-radius:3px}
+.bar .v{font-family:var(--f-mono);font-size:.82rem;text-align:right;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.key{display:flex;gap:16px;flex-wrap:wrap;font-size:.8rem;color:var(--ink-2);margin-top:8px}
+.key i{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:-1px;margin-right:6px}
+
+/* ---------- money stack ---------- */
+.stack{display:flex;gap:2px;height:30px;border-radius:5px;overflow:hidden;margin-top:14px}
+.stack span{display:block;height:100%}
+.stack .s-com{background:var(--muted)}
+.stack .s-fx{background:var(--shark)}
+.stack .s-1{background:var(--gold)}
+.stack .s-2{background:var(--gold-2)}
+.stack .s-3{background:var(--gold-soft);box-shadow:inset 0 0 0 1px var(--gold)}
+.money{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:12px}
+.money div{background:var(--panel-2);border:1px solid var(--line-soft);border-radius:5px;padding:10px 12px}
+.money dt{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:7px}
+.money dt i{width:10px;height:10px;border-radius:2px;flex:none}
+.money dd{margin:4px 0 0;font-family:var(--f-display);font-weight:700;font-size:1.5rem;line-height:1;font-variant-numeric:tabular-nums}
+.money dd small{display:block;font-family:var(--f-body);font-weight:500;font-size:.78rem;color:var(--ink-2);margin-top:4px}
+
+/* ---------- flow ---------- */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:14px;counter-reset:step}
+.step{background:var(--panel-2);border:1px solid var(--line);border-radius:6px;padding:12px;position:relative;min-width:0}
+.step::before{counter-increment:step;content:counter(step);font-family:var(--f-display);font-weight:800;font-size:1.5rem;color:var(--gold);line-height:1;display:block;margin-bottom:6px}
+.flow.plain .step::before{content:none}
+.step b{display:block;font-family:var(--f-display);font-weight:700;font-size:1rem;text-transform:uppercase;letter-spacing:.03em;line-height:1.1}
+.step small{display:block;font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;color:var(--gold-ink);margin:3px 0 6px}
+.step span{font-size:.86rem;color:var(--ink-2);line-height:1.35;display:block}
+.step.hot{border-color:var(--gold)}
+.step.bad{border-color:var(--bad)}
+.step.bad small{color:var(--bad)}
+
+/* ---------- ballot ---------- */
+.done{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.done span{font-family:var(--f-display);font-weight:600;font-size:1rem;text-transform:uppercase;letter-spacing:.03em;padding:7px 12px;border-radius:4px;border:1px solid var(--shark);background:var(--shark-soft);color:var(--ink)}
+.done span::before{content:"✓";color:var(--shark-ink);margin-right:8px;font-family:var(--f-mono)}
+.ballot-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:16px}
+.q{background:var(--panel);border:1px solid var(--gold);border-radius:6px;padding:16px 18px;box-shadow:var(--shadow)}
+.q .qn{font-family:var(--f-display);font-weight:800;font-size:2rem;color:var(--gold);line-height:1}
+.q h3{font-size:1.15rem;font-weight:700;text-transform:uppercase;margin:8px 0 6px}
+.q p{font-size:.9rem;color:var(--ink-2);margin:0}
+.q .rec{margin-top:10px;padding-top:8px;border-top:1px dashed var(--line);font-size:.86rem}
+.q .rec b{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;font-weight:600;margin-bottom:2px}
+
+.colophon{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--muted);line-height:1.8}
+
+@media (max-width:640px){
+  .p-head{grid-template-columns:1fr}
+  .tl li{grid-template-columns:1fr;gap:4px}
+  .tl .cost{padding-top:0}
+  .bar{grid-template-columns:1fr 46px;grid-template-areas:"l v" "t t"}
+  .bar .l{grid-area:l}.bar .v{grid-area:v}.bar .t{grid-area:t}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<style>body{margin:0}</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="court" aria-hidden="true">
+    <svg viewBox="0 0 600 420" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="20" y="20" width="560" height="380" rx="4"/>
+      <path d="M20 210 H580"/>
+      <circle cx="300" cy="210" r="60"/>
+      <path d="M20 90 H150 V330 H20"/>
+      <path d="M150 150 A60 60 0 0 1 150 270"/>
+      <path d="M20 40 Q250 210 20 380"/>
+      <path d="M580 90 H450 V330 H580"/>
+      <path d="M450 150 A60 60 0 0 0 450 270"/>
+      <path d="M580 40 Q350 210 580 380"/>
+    </svg>
+  </div>
+  <div class="brand">
+    <svg class="fin" viewBox="0 0 48 48" aria-hidden="true"><path d="M4 40 C12 34 18 22 22 8 C30 14 40 26 44 40 Z" fill="currentColor"/><path d="M4 40 H44" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    <div class="name">League constitution <b>SG Shark Dynasty League</b></div>
+  </div>
+  <h1>The Charter <span>v0.2 · 2026-27</span></h1>
+  <p class="stand">A keep-forever NBA league for twelve friends who already run a redraft team. Every rule is chosen against one constraint: <strong>five minutes a week in season, a handful of real decisions a year, and nobody leaves.</strong></p>
+
+  <dl class="tiles">
+    <div class="tile"><dt>Teams</dt><dd>12<small>one win a week, H2H</small></dd></div>
+    <div class="tile"><dt>Scoring</dt><dd>9-cat<small>win 5 of 9 to take the week</small></dd></div>
+    <div class="tile"><dt>Roster</dt><dd>15<small>+ 3 taxi + 3 IR</small></dd></div>
+    <div class="tile"><dt>Lineups</dt><dd>Weekly<small>lock Monday first tip</small></dd></div>
+    <div class="tile"><dt>Playoffs</dt><dd>Top 8<small>2-week final</small></dd></div>
+    <div class="tile"><dt>Free agency</dt><dd>Sept<small>one blind auction</small></dd></div>
+    <div class="tile"><dt>Buy-in</dt><dd>S$100<small>top three paid</small></dd></div>
+  </dl>
+
+  <div class="legend">
+    <span class="b"><span class="badge voted">Voted</span> decided by the group</span>
+    <span class="b"><span class="badge ballot">Ballot</span> still to vote, by Oct 5</span>
+    <span class="b"><span class="badge verified">Verified</span> checked on Fantrax</span>
+    <span class="b"><span class="mono" style="font-size:.8rem">ET</span> deadlines are US Eastern; SGT is 12–13 h ahead</span>
+  </div>
+
+  <nav class="nav" aria-label="Sections">
+    <ol>
+      <li><a href="#year"><b>00</b>A year</a></li>
+      <li><a href="#principles"><b>01</b>Principles</a></li>
+      <li><a href="#shape"><b>02</b>Shape</a></li>
+      <li><a href="#startup"><b>03</b>Startup</a></li>
+      <li><a href="#calendar"><b>04</b>Calendar</a></li>
+      <li><a href="#lottery"><b>05</b>Draft &amp; lottery</a></li>
+      <li><a href="#trading"><b>06</b>Trading</a></li>
+      <li><a href="#fa"><b>07</b>Free agency</a></li>
+      <li><a href="#decay"><b>08</b>Superteams</a></li>
+      <li><a href="#expansion"><b>09</b>Expansion</a></li>
+      <li><a href="#gov"><b>10</b>Money &amp; rules</a></li>
+      <li><a href="#launch"><b>11</b>Launch</a></li>
+      <li><a href="#ballot"><b>12</b>Ballot</a></li>
+    </ol>
+  </nav>
+</header>
+
+<!-- ================= 00 ================= -->
+<section class="panel" id="year">
+  <header class="p-head"><span class="p-num">00</span><div><h2>A year in this league</h2><p>The whole thing on one strip. Blue months are the season you already know; gold months are what makes it dynasty.</p></div></header>
+
+  <div class="grid g2">
+    <div class="card">
+      <ul>
+        <li><strong>You draft once, ever.</strong> After that your team is yours until you trade or cut a player.</li>
+        <li><strong>The season is the 9-cat league you already play, minus the chores.</strong> One lineup a week. One optional bid a week. Trades whenever.</li>
+        <li><strong>Late March:</strong> the final ends. The rest of the buy-in comes in and prize money is paid. Your roster rolls over untouched.</li>
+        <li><strong>May:</strong> the teams that missed the playoffs draw for the first pick.</li>
+        <li><strong>June:</strong> you draft rookies. Three rounds. Picks are yours to use or trade, three years out.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <ul>
+        <li><strong>September:</strong> the league votes on its rules, everyone cuts down, and the whole free-agent pool goes to one auction where the bottom team has the biggest budget.</li>
+        <li><strong>October:</strong> it starts again.</li>
+        <li><strong>A down season is a building season.</strong> Your young players are a year closer, your pick is high, your auction budget is the biggest in the league.</li>
+        <li><strong>A great roster doesn't get to stand still.</strong> The champion picks last, shops with the smallest budget, and has to make room for every new player he wants.</li>
+      </ul>
+    </div>
+  </div>
+
+  <figure>
+    <div class="scroll">
+      <div class="strip">
+        <div class="m season hot"><span class="mo">Oct</span><span class="ph">Tip-off</span><span class="ev">Rosters legal · week 1</span></div>
+        <div class="m season"><span class="mo">Nov</span><span class="ph">Season</span><span class="ev">Lineup Mon · bid Sun</span></div>
+        <div class="m season"><span class="mo">Dec</span><span class="ph">Season</span><span class="ev">Trade whenever</span></div>
+        <div class="m season"><span class="mo">Jan</span><span class="ph">Season</span><span class="ev">Buyers and sellers</span></div>
+        <div class="m season hot"><span class="mo">Feb</span><span class="ph">Deadline</span><span class="ev">NBA deadline · season ends Feb 28</span></div>
+        <div class="m season hot"><span class="mo">Mar</span><span class="ph">Playoffs</span><span class="ev">Top 8 · 2-week final · prizes paid</span></div>
+        <div class="m off"><span class="mo">Apr</span><span class="ph">Offseason</span><span class="ev">Trading open</span></div>
+        <div class="m off hot"><span class="mo">May</span><span class="ph">Lottery</span><span class="ev">Live call · picks 1–4 drawn</span></div>
+        <div class="m off hot"><span class="mo">Jun</span><span class="ph">Rookie draft</span><span class="ev">3 rounds · 72 h after NBA draft</span></div>
+        <div class="m off"><span class="mo">Jul</span><span class="ph">Summer</span><span class="ev">Trading only</span></div>
+        <div class="m off"><span class="mo">Aug</span><span class="ph">Summer</span><span class="ev">Trading only</span></div>
+        <div class="m off hot"><span class="mo">Sep</span><span class="ph">Preseason</span><span class="ev">Vote 1–7 · cut 10 · Frenzy ~20</span></div>
+      </div>
+    </div>
+    <figcaption>The league year · blue = in season, gold = offseason. The NBA signs free agents in July; we sign in September so new rules and new teams are in place first.</figcaption>
+  </figure>
+</section>
+
+<!-- ================= 01 ================= -->
+<section class="panel" id="principles">
+  <header class="p-head"><span class="p-num">01</span><div><h2>Three principles</h2><p>Every rule below traces back to one of these. When a rule change is argued in year two, argue the principle first.</p></div></header>
+  <div class="grid g3">
+    <div class="card"><h3>Scarcity is the game</h3><p>A dynasty league is only interesting if a good player is hard to replace. Roster limits, the pickup cap and the once-a-year auction exist to manufacture scarcity.</p></div>
+    <div class="card"><h3>Few decisions, each one heavy</h3><p>Remove the low-value chores (daily lineups, free-agent churn). Keep the high-value ones: draft, trade, one weekly lineup. Five minutes a week; three good evenings a year.</p></div>
+    <div class="card"><h3>Nobody leaves</h3><p>Dynasty leagues die from owner churn, not bad rules. The lottery, the inverse auction budget, the annual cutdown and a wide playoff field keep every bottom team eighteen months from contending, and it knows it.</p></div>
+  </div>
+</section>
+
+<!-- ================= 02 ================= -->
+<section class="panel" id="shape">
+  <header class="p-head"><span class="p-num">02</span><div><h2>League shape and roster</h2><p>Format, team count, roster, lineups, and how a season is structured.</p></div></header>
+
+  <div class="grid g2">
+    <div class="card voted">
+      <h3><span class="rn">Rule 2.1 · Format</span>Most categories wins the week <span class="badge voted">Voted</span></h3>
+      <p>Head-to-head across FG% · FT% · 3PM · PTS · REB · AST · STL · BLK · TOV. <strong>Win 5 of 9 and you take the matchup</strong>, whether it's 5-4 or 9-0. Standings by matchup record.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Week result</th><th>Counts as</th></tr></thead>
+        <tbody>
+          <tr><td class="k">9-0, 7-2, 5-4</td><td>1 win</td></tr>
+          <tr><td class="k">4-4-1</td><td>Tie (half a win)</td></tr>
+          <tr><td class="k">4-5, 0-9</td><td>1 loss</td></tr>
+        </tbody>
+      </table></div>
+      <div class="why"><b>Tiebreaks</b>Standings: total category record, then head-to-head, then a public coin flip. A tied playoff or consolation matchup goes to the higher seed. The two-week final and third-place game are one matchup on both weeks' stats combined.</div>
+    </div>
+
+    <div class="card voted">
+      <h3><span class="rn">Rules 2.2–2.3 · Teams and roster</span>12 teams · 15 active <span class="badge voted">Voted</span></h3>
+      <div class="rlbl">Starters · 10</div>
+      <div class="slots"><span class="slot start">PG</span><span class="slot start">SG</span><span class="slot start">G</span><span class="slot start">SF</span><span class="slot start">PF</span><span class="slot start">F</span><span class="slot start">C</span><span class="slot start">C</span><span class="slot start">UTIL</span><span class="slot start">UTIL</span></div>
+      <div class="rlbl">Bench · 5</div>
+      <div class="slots"><span class="slot">BN</span><span class="slot">BN</span><span class="slot">BN</span><span class="slot">BN</span><span class="slot">BN</span></div>
+      <div class="rlbl">Taxi · 3 · first or second NBA season</div>
+      <div class="slots"><span class="slot taxi">TAXI</span><span class="slot taxi">TAXI</span><span class="slot taxi">TAXI</span></div>
+      <div class="rlbl">Injured reserve · 3 · Out / Out for season</div>
+      <div class="slots"><span class="slot">IR</span><span class="slot">IR</span><span class="slot">IR</span></div>
+      <div class="why"><b>Depth</b>180 active players rostered (216 with taxi), deeper than a 12-team Yahoo league's 156. The free-agent pool is thin, so drafting depth matters. Every team has the same roster size within a season. If the team count is ever odd, Fantrax gives one team a bye each week <span class="badge verified">Verified</span></div>
+    </div>
+  </div>
+
+  <div class="grid g3">
+    <div class="card">
+      <h3><span class="rn">Rule 2.4 · Taxi squad</span>Where rookies live</h3>
+      <ul>
+        <li>3 slots for players in their <strong>first or second NBA season</strong>. They don't count against the 15 and can't be started.</li>
+        <li>A player leaves taxi at any time and can never return. Taxi players can be traded.</li>
+        <li>After his second season a player is promoted or released at the September cutdown.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="rn">Rule 2.5 · Lineups</span>Weekly lock, no exceptions</h3>
+      <ul>
+        <li>Lineups lock at the <strong>first tip on Monday (ET)</strong>, Tuesday morning SGT. No daily setting.</li>
+        <li><strong>No injury exception.</strong> If your starter is hurt on Tuesday, you're unlucky; that's fantasy.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="rn">Rule 2.6 · Injured reserve</span>Official injuries only</h3>
+      <ul>
+        <li>Only for players officially <strong>Out</strong> or <strong>Out For Season</strong>.</li>
+        <li>Off IR within 7 days of clearing, or the roster is illegal.</li>
+        <li>IR moves take effect at the next weekly lock.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>Season structure <span class="mono" style="font-size:.7rem;color:var(--muted)">2026-27</span></h3>
+      <ul>
+        <li><strong>Regular season: 18 scoring weeks</strong> from opening night (~Oct 20). Everyone plays everyone once and seven opponents twice; Fantrax builds the schedule.</li>
+        <li>The All-Star week (mid-Feb) is merged with the week after it. Regular season ends <strong>~Feb 28</strong>.</li>
+        <li><strong>Playoffs Mar 1–28: top 8, no byes.</strong> Rounds are one week; the <strong>final is two weeks</strong>.</li>
+        <li><strong>Third-place game</strong> between the semi-final losers, over the final's two weeks. It decides 3rd-place money.</li>
+        <li><strong>Hard stop</strong> before the NBA's final week, so resting stars don't decide the title.</li>
+        <li><strong>"Finish"</strong> everywhere in this charter: champion, runner-up, 3rd-place game winner and loser, quarter-final losers by record, then teams 9–12 by record.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <figure>
+        <svg class="fig" viewBox="0 0 560 300" role="img" aria-label="Playoffs at 12 teams: eight teams play quarter-finals in week 1, semi-finals in week 2, then a two-week final, while the semi-final losers play a third-place game over the same two weeks. The four non-playoff teams play a consolation bracket with a third-place game.">
+          <defs><marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="currentColor"/></marker></defs>
+          <g font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" style="color:var(--muted)">
+            <text x="10" y="16">QUARTERS · WK 1</text><text x="190" y="16">SEMIS · WK 2</text><text x="380" y="16">WEEKS 3–4</text>
+          </g>
+          <g font-family="Barlow, sans-serif" font-size="12" fill="currentColor" style="color:var(--ink)">
+            <rect x="10" y="28" width="130" height="22" rx="3" fill="none" stroke="currentColor" style="color:var(--line)"/><text x="18" y="43">1 v 8</text>
+            <rect x="10" y="56" width="130" height="22" rx="3" fill="none" stroke="currentColor" style="color:var(--line)"/><text x="18" y="71">4 v 5</text>
+            <rect x="10" y="92" width="130" height="22" rx="3" fill="none" stroke="currentColor" style="color:var(--line)"/><text x="18" y="107">2 v 7</text>
+            <rect x="10" y="120" width="130" height="22" rx="3" fill="none" stroke="currentColor" style="color:var(--line)"/><text x="18" y="135">3 v 6</text>
+            <rect x="190" y="42" width="130" height="22" rx="3" fill="none" stroke="currentColor" style="color:var(--line)"/><text x="198" y="57">Semi A</text>
+            <rect x="190" y="106" width="130" height="22" rx="3" fill="none" stroke="currentColor" style="color:var(--line)"/><text x="198" y="121">Semi B</text>
+            <rect x="380" y="56" width="160" height="22" rx="3" fill="none" stroke="currentColor" style="color:var(--gold)"/><text x="388" y="71" style="fill:var(--gold-ink)">Final · winners</text>
+            <rect x="380" y="98" width="160" height="22" rx="3" fill="none" stroke="currentColor" stroke-dasharray="4 3" style="color:var(--gold)"/><text x="388" y="113">3rd place · losers</text>
+          </g>
+          <g stroke="currentColor" stroke-width="1.5" fill="none" style="color:var(--muted)" marker-end="url(#ah)">
+            <path d="M140 39 C165 39 165 53 185 53"/><path d="M140 67 C165 67 165 53 185 53"/>
+            <path d="M140 103 C165 103 165 117 185 117"/><path d="M140 131 C165 131 165 117 185 117"/>
+            <path d="M320 53 C350 53 350 67 375 67"/><path d="M320 117 C350 117 350 67 375 67"/>
+          </g>
+          <g stroke="currentColor" stroke-width="1.2" fill="none" stroke-dasharray="4 3" style="color:var(--muted)" marker-end="url(#ah)">
+            <path d="M320 53 C355 53 345 109 375 109"/><path d="M320 117 C350 117 350 109 375 109"/>
+          </g>
+          <g font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" style="color:var(--muted)">
+            <text x="10" y="176">CONSOLATION · TEAMS 9–12</text>
+          </g>
+          <g font-family="Barlow, sans-serif" font-size="12" fill="currentColor" style="color:var(--ink)">
+            <rect x="10" y="186" width="130" height="22" rx="3" fill="none" stroke="currentColor" style="color:var(--shark)"/><text x="18" y="201">9 v 12</text>
+            <rect x="10" y="216" width="130" height="22" rx="3" fill="none" stroke="currentColor" style="color:var(--shark)"/><text x="18" y="231">10 v 11</text>
+            <rect x="190" y="186" width="150" height="22" rx="3" fill="none" stroke="currentColor" style="color:var(--shark)"/><text x="198" y="201">Consolation final</text>
+            <rect x="190" y="216" width="150" height="22" rx="3" fill="none" stroke="currentColor" style="color:var(--shark)"/><text x="198" y="231">Consolation 3rd place</text>
+            <text x="380" y="201" style="fill:var(--ink-2)">→ 1st–4th finish</text>
+            <text x="380" y="217" style="fill:var(--ink-2)">feeds the lottery</text>
+          </g>
+          <g stroke="currentColor" stroke-width="1.5" fill="none" style="color:var(--muted)" marker-end="url(#ah)">
+            <path d="M140 197 H185"/><path d="M140 227 H185"/>
+          </g>
+          <text x="10" y="276" font-family="Barlow, sans-serif" font-size="11" fill="currentColor" style="color:var(--muted)">Tied matchup: higher seed advances. Weeks 3–4 count as one matchup on combined stats.</text>
+        </svg>
+        <figcaption>Playoffs, third-place game and consolation · 12 teams</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03 ================= -->
+<section class="panel" id="startup">
+  <header class="p-head"><span class="p-num">03</span><div><h2>Startup draft</h2><p>Once, ever. Everyone starts from zero; the whole NBA is in the pool, this year's rookies included.</p></div></header>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3><span class="rn">Rule 3.1 · Format</span>18 rounds, snake, third-round reversal</h3>
+      <ul>
+        <li><strong>18 rounds</strong> (15 active + 3 taxi), <strong>216 picks</strong>.</li>
+        <li>Order runs 1→12, 12→1, <strong>12→1 again</strong>, then a normal snake.</li>
+        <li><strong>Draft order is randomised by Fantrax</strong> when the draft is set up.</li>
+        <li>Drafted NBA rookies may go to taxi. Anyone with more than 15 non-rookies cuts down before opening night.</li>
+      </ul>
+      <div class="why"><b>Why the reversal</b>The 1.01 in dynasty is worth eight seasons, not one. The last slot gets picks 12, 13 and 25, which evens the opening gap.</div>
+    </div>
+    <div class="card">
+      <h3><span class="rn">Rule 3.3 · 2026 startup</span>Slow draft, starts on creation</h3>
+      <ul>
+        <li>Starts as soon as the league exists on Fantrax (target <strong>Oct 5</strong>).</li>
+        <li><strong>1 hour per pick</strong>, frozen overnight 1am–9am SGT.</li>
+        <li>Worst case, every pick uses its full hour: 216 picks in 13½ days, done Oct 19, the day before tip-off.</li>
+        <li><strong>Pace check Oct 12:</strong> if the draft hasn't reached round 10, the clock drops to 30 minutes.</li>
+        <li>A timed-out pick is auto-drafted from your queue or Fantrax's rankings. <strong>Set your queue.</strong> Trades are open during the draft.</li>
+      </ul>
+    </div>
+  </div>
+
+  <figure class="card" style="margin-top:14px">
+    <div class="scroll">
+      <div class="snake" role="img" aria-label="Draft order by round at 12 teams: round 1 runs 1 to 12, round 2 runs 12 to 1, round 3 runs 12 to 1 again, round 4 returns to 1 to 12.">
+        <span class="r">Round 1</span><span class="c">1</span><span class="c">2</span><span class="c">3</span><span class="c">4</span><span class="c">5</span><span class="c">6</span><span class="c">7</span><span class="c">8</span><span class="c">9</span><span class="c">10</span><span class="c">11</span><span class="c hi">12</span><span class="d">→</span>
+        <span class="r">Round 2</span><span class="c hi">12</span><span class="c">11</span><span class="c">10</span><span class="c">9</span><span class="c">8</span><span class="c">7</span><span class="c">6</span><span class="c">5</span><span class="c">4</span><span class="c">3</span><span class="c">2</span><span class="c">1</span><span class="d">←</span>
+        <span class="r">Round 3</span><span class="c hi">12</span><span class="c">11</span><span class="c">10</span><span class="c">9</span><span class="c">8</span><span class="c">7</span><span class="c">6</span><span class="c">5</span><span class="c">4</span><span class="c">3</span><span class="c">2</span><span class="c">1</span><span class="d">←</span>
+        <span class="r">Round 4</span><span class="c">1</span><span class="c">2</span><span class="c">3</span><span class="c">4</span><span class="c">5</span><span class="c">6</span><span class="c">7</span><span class="c">8</span><span class="c">9</span><span class="c">10</span><span class="c">11</span><span class="c">12</span><span class="d">→</span>
+      </div>
+    </div>
+    <figcaption>Third-round reversal · the team in slot 12 picks 12th, 13th and 25th overall</figcaption>
+  </figure>
+</section>
+
+<!-- ================= 04 ================= -->
+<section class="panel" id="calendar">
+  <header class="p-head"><span class="p-num">04</span><div><h2>The league year</h2><p>2026-27 as the reference season. All dates ET. Three real events a year, plus a lottery call and a vote.</p></div></header>
+
+  <div class="card">
+    <ol class="tl">
+      <li><span class="when">~Oct 20<small>2026</small></span><span class="what"><b>Tip-off</b><span>Rosters legal. First weekly lineup.</span></span><span class="cost">15 min</span></li>
+      <li><span class="when">Oct–Feb</span><span class="what"><b>Regular season</b><span>Lineup by Monday. Bid Sunday if you want. Trade whenever.</span></span><span class="cost">5 min / week</span></li>
+      <li><span class="when">~Feb 5<small>2027 · verify</small></span><span class="what"><b>Trade deadline</b><span>Matched to the NBA's.</span></span><span class="cost">One evening</span></li>
+      <li><span class="when">Mar 1–28</span><span class="what"><b>Playoffs</b><span>Eight teams play for the title; teams 9–12 play the consolation bracket for lottery balls.</span></span><span class="cost">5 min / week</span></li>
+      <li><span class="when">~Mar 28</span><span class="what"><b>Final · rollover · prizes</b><span>Rest of the buy-in (S$85) due; prizes paid. Rosters roll over untouched. Frenzy budgets announced; trading reopens the next day.</span></span><span class="cost">—</span></li>
+      <li><span class="when">Mid-May</span><span class="what"><b>Lottery</b><span>Drawn live on a group call.</span></span><span class="cost">20 min</span></li>
+      <li><span class="when">Late June</span><span class="what"><b>Rookie draft</b><span>72 hours after the NBA draft. 3 rounds, slow clock, live pick trading.</span></span><span class="cost">2–3 days, slow</span></li>
+      <li><span class="when">Jul–Aug</span><span class="what"><b>Summer</b><span>Trading only. Rosters may run over the limit until the cutdown.</span></span><span class="cost">Whenever</span></li>
+      <li><span class="when">Sept 1–7</span><span class="what"><b>Governance window</b><span>Amendments, expansion, owner changes. Votes close Sept 7.</span></span><span class="cost">20 min</span></li>
+      <li><span class="when">Sept 10</span><span class="what"><b>Cutdown</b><span>Every team at or below the roster limit in force. Cuts go to the pool.</span></span><span class="cost">30 min</span></li>
+      <li><span class="when">~Sept 15</span><span class="what"><b>Expansion draft</b><span>Only in an expansion year (§09).</span></span><span class="cost">One evening</span></li>
+      <li><span class="when">~Sept 20</span><span class="what"><b>FA Frenzy</b><span>One blind-bid auction for the whole free-agent pool. Budget by finish.</span></span><span class="cost">One evening</span></li>
+      <li><span class="when">Before tip-off</span><span class="what"><b>Premium share</b><span>S$15 each, so Fantrax Premium is paid before it bills.</span></span><span class="cost">—</span></li>
+    </ol>
+  </div>
+  <div class="callout"><b>Rule 4.1 · The league year</b> starts when the September window closes. Rules passed in the window apply from that moment, so the cutdown, expansion draft and Frenzy all run under the new rules. Rosters roll over completely; there is no annual keeper decision.</div>
+</section>
+
+<!-- ================= 05 ================= -->
+<section class="panel" id="lottery">
+  <header class="p-head"><span class="p-num">05</span><div><h2>Rookie draft and lottery</h2><p>How new players enter, how the order is set, and how a bottom team climbs back.</p></div></header>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3><span class="rn">Rule 5.1 · Rookie draft</span>3 rounds, 36 picks, straight order</h3>
+      <ul>
+        <li>Eligible: players entering their first NBA season (that year's draft class, undrafted rookies, first-year arrivals from overseas).</li>
+        <li><strong>Straight order</strong>: the same order every round. "A 2028 first" is one well-understood asset.</li>
+        <li>Starts 72 hours after the second night of the NBA draft. 8-hour clock, frozen overnight SGT. Live pick trading throughout.</li>
+        <li>Undrafted rookies go to the Frenzy pool. Rosters may exceed the limit until the September cutdown.</li>
+      </ul>
+      <div class="why"><b>Draft order</b>Picks 1–4: drawn in the lottery. Picks 5–12: playoff teams in reverse finish; the champion picks 12th.</div>
+    </div>
+    <div class="card">
+      <h3><span class="rn">Rule 5.3 · Lineup integrity</span>The only penalty in the charter</h3>
+      <ul>
+        <li>A team with an empty starting slot in <strong>two or more scoring weeks</strong> forfeits its lottery balls and picks last among the non-playoff teams.</li>
+        <li>Waived for a team in receivership (Rule 10.5).</li>
+      </ul>
+      <div class="why"><b>Why</b>Empty starting slots are the one thing that ruins other people's seasons.</div>
+    </div>
+  </div>
+
+  <div class="card ballot" style="margin-top:14px">
+    <h3><span class="rn">Rule 5.2 · The lottery</span>Balls from record and from the consolation bracket <span class="badge ballot">Ballot</span></h3>
+    <div class="grid g2" style="margin-top:6px">
+      <div>
+        <div class="eyebrow">Record balls · teams 9–12, worst to best</div>
+        <div class="bars">
+          <div class="bar"><span class="l">Worst record</span><span class="t"><span class="f" style="width:100%"></span></span><span class="v">40</span></div>
+          <div class="bar"><span class="l">2nd worst</span><span class="t"><span class="f" style="width:75%"></span></span><span class="v">30</span></div>
+          <div class="bar"><span class="l">3rd worst</span><span class="t"><span class="f" style="width:50%"></span></span><span class="v">20</span></div>
+          <div class="bar"><span class="l">Best of the four</span><span class="t"><span class="f" style="width:25%"></span></span><span class="v">10</span></div>
+        </div>
+        <div class="eyebrow" style="margin-top:16px">Consolation balls · bracket finish</div>
+        <div class="bars">
+          <div class="bar"><span class="l">Consolation champion</span><span class="t"><span class="f2" style="width:50%"></span></span><span class="v">20</span></div>
+          <div class="bar"><span class="l">Runner-up</span><span class="t"><span class="f2" style="width:37.5%"></span></span><span class="v">15</span></div>
+          <div class="bar"><span class="l">Third</span><span class="t"><span class="f2" style="width:25%"></span></span><span class="v">10</span></div>
+          <div class="bar"><span class="l">Fourth</span><span class="t"><span class="f2" style="width:12.5%"></span></span><span class="v">5</span></div>
+        </div>
+        <div class="eyebrow" style="margin-top:16px">Playoff balls</div>
+        <div class="bars">
+          <div class="bar"><span class="l">Each of the six playoff teams out before the final</span><span class="t"><span class="f" style="width:2.5%"></span></span><span class="v">1</span></div>
+          <div class="bar"><span class="l">Champion, runner-up</span><span class="t"></span><span class="v">0</span></div>
+        </div>
+        <div class="key"><span><i style="background:var(--gold)"></i>Record / playoff</span><span><i style="background:var(--shark)"></i>Consolation</span><span>Bars scaled to 40 · 156 balls in all</span></div>
+      </div>
+      <div>
+        <div class="eyebrow">How it's drawn · mid-May, live on a call</div>
+        <div class="flow" style="grid-template-columns:1fr">
+          <div class="step hot"><b>Draw pick 1</b><small>156 balls</small><span>One number is drawn. That team has the 1.01. Its balls come out of the pot.</span></div>
+          <div class="step"><b>Draw picks 2, 3, 4</b><small>NBA style</small><span>Each drawn from what's left; each winner's balls are removed before the next draw.</span></div>
+          <div class="step"><b>Fill the rest</b><small>picks 5–12</small><span>Remaining non-playoff teams by total balls (ties to the worse record), then playoff teams by finish, champion last. A playoff team that won a lottery pick is skipped in its usual slot.</span></div>
+        </div>
+        <div class="tbl"><table>
+          <thead><tr><th>Scenario</th><th class="n">Balls</th><th class="n">1.01</th></tr></thead>
+          <tbody>
+            <tr><td>Worst record + consolation champion</td><td class="n">60</td><td class="n">38%</td></tr>
+            <tr><td>Worst record + first-round consolation exit</td><td class="n">45</td><td class="n">29%</td></tr>
+            <tr><td>Best of the four + consolation champion</td><td class="n">30</td><td class="n">19%</td></tr>
+            <tr><td>All six playoff teams together</td><td class="n">6</td><td class="n">4%</td></tr>
+          </tbody>
+        </table></div>
+        <div class="why"><b>Why this shape</b>Record dominates, so a bad season still earns the pick. The consolation bracket is worth real balls, so nobody sits out March. Playoff teams hold a lottery ticket, not a strategy: about once every 26 years. The commissioner posts the randomiser seed before the call.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 06 ================= -->
+<section class="panel" id="trading">
+  <header class="p-head"><span class="p-num">06</span><div><h2>Trading</h2><p>The main event. Rules here enable trades; they don't police them.</p></div></header>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3><span class="rn">Rule 6.1 · What can be traded</span>Four assets, nothing else</h3>
+      <div class="flow plain" style="grid-template-columns:repeat(2,1fr)">
+        <div class="step"><b>Players</b><span>Active, taxi or IR.</span></div>
+        <div class="step"><b>Rookie picks</b><span>In the next <strong>three</strong> drafts.</span></div>
+        <div class="step"><b>In-season dollars</b><span>During the season.</span></div>
+        <div class="step hot"><b>Frenzy budget</b><span><strong>Yes, the Frenzy budget is tradeable</strong>, from the day budgets are announced (the day after the final) until the Frenzy closes.</span></div>
+      </div>
+      <p style="margin-top:12px">No future considerations, no side deals, no "I'll owe you one." Real money is never part of a trade.</p>
+      <div class="why"><b>Why Frenzy dollars trade</b>It's the NBA's "cap space for picks" deal. A rebuilding team with a big budget and nothing to spend it on sells part of it to a contender for a pick.</div>
+    </div>
+    <div class="card">
+      <h3><span class="rn">Rules 6.2–6.4</span>Vetoes, windows, picks</h3>
+      <ul>
+        <li><strong>No vetoes for value.</strong> Collusion review only: commissioner and vice-commissioner, unanimous, within 24 hours. If one is a party, the other rules alone.</li>
+        <li><strong>Windows:</strong> trading closes at the NBA trade deadline and reopens the day after the league final. Open all offseason, including live during the rookie draft and through the Frenzy.</li>
+        <li><strong>Picks stay picks.</strong> A traded pick is the pick itself, wherever it lands. Fantrax tracks it; the commissioner keeps a ledger too.</li>
+        <li>Trades go through on commissioner review; there is no league vote.</li>
+      </ul>
+      <div class="why"><b>Why no vetoes</b>Bad trades are self-correcting in dynasty. Whoever traded a 23-year-old star for a 33-year-old one lives with it for six years.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 07 ================= -->
+<section class="panel" id="fa">
+  <header class="p-head"><span class="p-num">07</span><div><h2>Free agency</h2><p>One blind bid a week in season. One auction a year in September. No streaming, ever. All bidding is in fantasy dollars.</p></div></header>
+
+  <div class="grid g2">
+    <div class="card ballot">
+      <h3><span class="rn">Rule 7.1 · In-season</span>One blind bid, Sunday night <span class="badge ballot">Ballot</span></h3>
+      <ul>
+        <li>No open free agency. Every acquisition goes through one blind bid processed <strong>Sunday 11pm ET</strong> (Monday 11am–12pm SGT).</li>
+        <li>Season budget <strong>$100</strong>, minimum bid $1, ties to the worse record.</li>
+        <li><strong>You pay what you bid.</strong> (No proxy bidding, where the winner pays $1 over the second-highest bid.)</li>
+        <li>Dropped players go straight into the bid pool. No free pickups between runs.</li>
+        <li>Bidding runs through the playoffs; unspent dollars vanish when the final ends.</li>
+        <li><strong>Hard cap on acquisitions per team per season: 5, 8, 10 or 12.</strong></li>
+      </ul>
+      <div class="why"><b>Why a cap</b>With weekly lineups the wire only matters if someone streams the bench for four-game weeks. That's the grind this league exists to kill.</div>
+    </div>
+    <div class="card">
+      <h3><span class="rn">Rule 7.2 · Cutdown</span>Sept 10 · at or below the limit</h3>
+      <ul>
+        <li>Every team must be <strong>at or below</strong> 15 active + 3 taxi. IR only for players still officially out.</li>
+        <li>How far below is your choice. Want open spots for the Frenzy? Cut deeper.</li>
+        <li>Aged-out taxi players are promoted or released here. Cuts go to the pool.</li>
+      </ul>
+      <div class="why"><b>Why after the vote</b>A roster-limit change passed in September is applied once, here, and the Frenzy fills to the new size.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3><span class="rn">Rule 7.3 · FA Frenzy</span>~Sept 20 · one blind multi-round auction</h3>
+    <div class="grid g2" style="margin-top:6px">
+      <div>
+        <ul>
+          <li>After the cutdown and any expansion draft, <strong>every cut, every undrafted rookie and every unrostered NBA player</strong> goes into one pool.</li>
+          <li>A winning bid needs an open roster spot or a named drop. Tied bids go to the worse finish.</li>
+          <li>Budgets by last season's finish. Announced the day after the final; tradeable from then. Expansion teams get the top budget.</li>
+        </ul>
+        <div class="callout"><b>Rule 7.4 · No single bid above half your budget.</b> The champion can put at most $30 on one player; a mid-table team with $120 can go to $60; the bottom team to $85. The ladder sets how many players you can afford; this rule stops a full roster from buying the best one anyway.</div>
+        <div class="why"><b>Rule 7.5 · Budgets are separate</b>Frenzy dollars and in-season dollars never mix, and unspent Frenzy money doesn't carry over. The commissioner sets Frenzy budgets by hand before the auction and resets everyone to $100 before tip-off.</div>
+      </div>
+      <div>
+        <div class="eyebrow">Frenzy budgets · bars to scale</div>
+        <div class="bars">
+          <div class="bar"><span class="l">12th</span><span class="t"><span class="f" style="width:100%"></span></span><span class="v">$170</span></div>
+          <div class="bar"><span class="l">11th</span><span class="t"><span class="f" style="width:94.1%"></span></span><span class="v">$160</span></div>
+          <div class="bar"><span class="l">10th</span><span class="t"><span class="f" style="width:88.2%"></span></span><span class="v">$150</span></div>
+          <div class="bar"><span class="l">9th</span><span class="t"><span class="f" style="width:82.4%"></span></span><span class="v">$140</span></div>
+          <div class="bar"><span class="l">8th</span><span class="t"><span class="f" style="width:76.5%"></span></span><span class="v">$130</span></div>
+          <div class="bar"><span class="l">7th</span><span class="t"><span class="f" style="width:70.6%"></span></span><span class="v">$120</span></div>
+          <div class="bar"><span class="l">6th</span><span class="t"><span class="f" style="width:64.7%"></span></span><span class="v">$110</span></div>
+          <div class="bar"><span class="l">5th</span><span class="t"><span class="f" style="width:58.8%"></span></span><span class="v">$100</span></div>
+          <div class="bar"><span class="l">4th</span><span class="t"><span class="f" style="width:52.9%"></span></span><span class="v">$90</span></div>
+          <div class="bar"><span class="l">3rd</span><span class="t"><span class="f" style="width:47.1%"></span></span><span class="v">$80</span></div>
+          <div class="bar"><span class="l">Runner-up</span><span class="t"><span class="f" style="width:41.2%"></span></span><span class="v">$70</span></div>
+          <div class="bar"><span class="l">Champion</span><span class="t"><span class="f" style="width:35.3%"></span></span><span class="v">$60</span></div>
+        </div>
+        <div class="key"><span>Max single bid = half of each budget: $85 down to $30</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 08 ================= -->
+<section class="panel" id="decay">
+  <header class="p-head"><span class="p-num">08</span><div><h2>Why a superteam decays</h2><p>No rule set prevents one. These make holding a great roster cost something every year, and give the teams below an automatic supply of talent.</p></div></header>
+  <div class="grid g3">
+    <div class="card"><h3>Annual cutdown</h3><p>A stacked team can't add without releasing, and every release goes into a pool the bottom team bids on with the most money.</p></div>
+    <div class="card"><h3>Inverse budgets + half-bid cap</h3><p>The bottom team has nearly 3× the champion's money and can always outbid him for any one player.</p></div>
+    <div class="card"><h3>Weighted lottery</h3><p>Non-playoff teams get picks 1–4. The champion picks last.</p></div>
+    <div class="card"><h3>Three-draft horizon</h3><p>Nobody can mortgage more than three years of a franchise.</p></div>
+    <div class="card soft"><h3>Contracts and cap <span class="badge note">Year 3+</span></h3><p>Native on Fantrax Premium. Not in year one: it doubles offseason admin. Revisit in September 2029, or when someone complains a team is too good.</p></div>
+  </div>
+</section>
+
+<!-- ================= 09 ================= -->
+<section class="panel" id="expansion">
+  <header class="p-head"><span class="p-num">09</span><div><h2>Expansion</h2><p>The league is built to grow. New teams are voted in during the September window and play that October.</p></div></header>
+
+  <div class="card">
+    <h3>The September sequence in an expansion year</h3>
+    <div class="flow">
+      <div class="step"><b>Vote</b><small>Sept 1–7</small><span>Three-quarters of owners. Each incoming owner named before the vote. Any number of teams; even preferred.</span></div>
+      <div class="step"><b>Cutdown</b><small>Sept 10</small><span>Everyone at or below the limit.</span></div>
+      <div class="step"><b>Protect</b><small>Sept 12</small><span>Each existing team protects <strong>60% of its active roster</strong>, rounded up: 9 of 15. Taxi auto-protected; IR counts as active.</span></div>
+      <div class="step hot"><b>Expansion draft</b><small>~Sept 15 · live</small><span>New teams snake-draft <strong>8 players each</strong> (coin flip, A-B-B-A). No existing team loses more than ⌈8 × new ÷ existing⌉: 2 at 12→14.</span></div>
+      <div class="step"><b>Frenzy</b><small>~Sept 20</small><span>Expansion teams get the <strong>top budget</strong>. Anyone still over the new limit cuts down first.</span></div>
+      <div class="step"><b>Tip-off</b><small>October</small><span>New teams own all their future picks and enter the next lottery on their own record.</span></div>
+    </div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>Protect 9, lose at most 2. How?</h3>
+      <ul>
+        <li><strong>Protected (9):</strong> untouchable.</li>
+        <li><strong>Exposed (6):</strong> the new teams may pick from these.</li>
+        <li><strong>Per-team cap (2):</strong> the most any one team loses.</li>
+      </ul>
+      <p>The protection count decides <em>which</em> players you lose: the best of your six exposed. Exposing six is not a risk of losing six.</p>
+      <div class="why"><b>Worked example · 12 → 14</b>Two new teams need 16 players. Twelve teams expose 72; 16 are taken, roughly each roster's 10th–12th men; the other 56 stay put. Four teams lose 2, eight lose 1.</div>
+    </div>
+    <div class="card">
+      <h3>What a new team looks like</h3>
+      <ul>
+        <li>8 rotation players from the expansion draft.</li>
+        <li>The biggest budget in the Frenzy.</li>
+        <li>A full set of its own picks.</li>
+      </ul>
+      <p>Target: mid-table in year one. Competitive, not a champion.</p>
+      <div class="why"><b>Precedent</b>Charlotte 2004 protected 8 of 15. Vegas 2017 protected about 11 of 23. <span class="badge verified">Verified</span> Fantrax adds teams at renewal with existing rosters untouched.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 10 ================= -->
+<section class="panel" id="gov">
+  <header class="p-head"><span class="p-num">10</span><div><h2>Money, governance and continuity</h2><p>The buy-in, the prizes, the penalty for walking out, and how the league outlives any one of us.</p></div></header>
+
+  <div class="card voted">
+    <h3><span class="rn">Rule 10.7 · Buy-in and prizes</span>S$100 a season, top three paid <span class="badge voted">Voted</span></h3>
+    <figure>
+      <div class="stack" role="img" aria-label="The S$1,200 pot: S$50 commissioner, S$180 Fantrax Premium, S$620 first place, S$250 second place, S$100 third place.">
+        <span class="s-com" style="width:4.17%"></span><span class="s-fx" style="width:15%"></span><span class="s-1" style="width:51.67%"></span><span class="s-2" style="width:20.83%"></span><span class="s-3" style="width:8.33%"></span>
+      </div>
+      <dl class="money">
+        <div><dt><i style="background:var(--gold)"></i>1st place</dt><dd>S$620<small>64% of the prize pool</small></dd></div>
+        <div><dt><i style="background:var(--gold-2)"></i>2nd place</dt><dd>S$250<small>2.5× the buy-in</small></dd></div>
+        <div><dt><i style="background:var(--gold-soft);box-shadow:inset 0 0 0 1px var(--gold)"></i>3rd place</dt><dd>S$100<small>buy-in back</small></dd></div>
+        <div><dt><i style="background:var(--shark)"></i>Fantrax Premium</dt><dd>S$180<small>US$129.95 + card fees</small></dd></div>
+        <div><dt><i style="background:var(--muted)"></i>Commissioner</dt><dd>S$50<small>+ any Premium change</small></dd></div>
+      </dl>
+      <figcaption>The pot · 12 × S$100 = S$1,200 · prize pool S$970</figcaption>
+    </figure>
+    <div class="grid g2" style="margin-top:14px">
+      <div class="flow plain" style="grid-template-columns:1fr 1fr;margin-top:0">
+        <div class="step hot"><b>S$15</b><small>by Oct 5, 2026</small><span>Your share of Fantrax Premium, before the draft. Later years: before tip-off.</span></div>
+        <div class="step"><b>S$85</b><small>by the final, ~Mar 28</small><span>The rest of the buy-in, by the end of the season.</span></div>
+      </div>
+      <div>
+        <ul>
+          <li>Prizes are paid once every buy-in is in. Anyone who still owes has it taken from their winnings first.</li>
+          <li>1st, 2nd and 3rd are decided on the field: the final and the third-place game.</li>
+          <li>Any difference between the S$180 reserve and Fantrax's actual charge is the commissioner's to keep or cover.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card voted" style="margin-top:14px">
+    <h3><span class="rn">Rules 10.1–10.2 · Commitment and leaving</span>Play, stay, or give three seasons' notice <span class="badge voted">Voted</span></h3>
+    <div class="flow plain">
+      <div class="step"><b>Commit</b><small>Rule 10.1</small><span>Every founding owner commits to play and to stay in the SG Shark Dynasty League. If life changes, you hand the franchise on.</span></div>
+      <div class="step hot"><b>Give notice</b><small>three seasons ahead</small><span>In writing, in the league chat. Your final season is the third that starts after notice. Notice in Dec 2026 → you leave after 2029-30.</span></div>
+      <div class="step"><b>Serve it out</b><small>after notice</small><span>Play and trade players normally. <strong>No trading draft picks</strong>: they pass to whoever takes over.</span></div>
+      <div class="step bad"><b>Leave early</b><small>S$300 · out of pocket</small><span>Paid personally by the owner who quits, on top of that season's full buy-in. Never from the pot, never waived. It goes into next season's prize pool.</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3>When a team is left without an owner</h3>
+    <div class="flow">
+      <div class="step"><b>Receivership</b><small>Rule 10.5 · 2 weeks silent</small><span>Two scoring weeks with no legal lineup and no reply in the chat. The commissioner sets a legal lineup each Monday; trading and bidding frozen; Rule 5.3 waived.</span></div>
+      <div class="step"><b>Offered on</b><small>after 4 weeks, or on exit</small><span>To the reserve list first, then publicly. An owner who leaves without notice may not trade after announcing.</span></div>
+      <div class="step hot"><b>Intact takeover</b><small>Rule 10.3 · one orphan</small><span>Roster, picks and budgets pass whole. The new owner gets a bonus 2nd-round pick and +$25 Frenzy budget. May rename; history stays.</span></div>
+      <div class="step"><b>Dispersal draft</b><small>Rule 10.6 · two or more</small><span>Pool their players and picks. Incoming owners snake-draft in random order to the limit; the rest go to the Frenzy.</span></div>
+      <div class="step"><b>Contraction</b><small>no owner when the window closes</small><span>Players to remaining teams by reverse-finish snake, max two each, rest to the Frenzy. Its own future picks void; picks it traded away become compensatory picks; picks it held return to their teams.</span></div>
+    </div>
+    <div class="why"><b>Banned</b>Redistributing an orphan's players among existing owners, except on contraction. Letting a friend run two teams: collusion risk, no incentive to make the orphan good.</div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3><span class="rn">Rule 10.4 · Amendments</span>September only</h3>
+      <ul>
+        <li>Proposed only in the <strong>Sept 1–7 window</strong>.</li>
+        <li>Pass on <strong>three-quarters of owners, rounded up: 9 of 12</strong>.</li>
+        <li>Take effect when the window closes. Nothing changes at any other time, even unanimously.</li>
+        <li>Expansion goes through the same window and threshold.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="rn">Rule 10.8 · Continuity</span>The league outlives any one of us</h3>
+      <ul>
+        <li>A <strong>reserve list</strong> of would-be owners with first refusal on orphans and expansion seats.</li>
+        <li>The <strong>vice-commissioner, Timothy Kong</strong>, is a Fantrax co-commissioner and succeeds automatically.</li>
+        <li>Daily backups (Premium) on. The pick ledger and protection lists also live in a shared document.</li>
+        <li>One group chat is league infrastructure: trades announced, votes held, lottery seeds posted.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 11 ================= -->
+<section class="panel" id="launch">
+  <header class="p-head"><span class="p-num">11</span><div><h2>Launch, 2026</h2><p>From the owner list to the first prize cheque.</p></div></header>
+  <div class="card">
+    <ol class="tl">
+      <li><span class="when">Oct 3</span><span class="what"><b>Owner list closed at 12</b><span>Group chat live. Every owner states the commitment. Remaining ballot posted with a 48-hour window.</span></span><span class="cost">Sat</span></li>
+      <li><span class="when">Oct 5</span><span class="what"><b>Votes closed · S$15 paid · draft starts</b><span>Charter ratified with results written in. Fantrax league built, settings checked, vice-commissioner added, everyone invited, order randomised. Slow draft begins.</span></span><span class="cost">Mon</span></li>
+      <li><span class="when">Oct 12</span><span class="what"><b>Pace check</b><span>Not at round 10 yet? The clock drops to 30 minutes.</span></span><span class="cost">Mon</span></li>
+      <li><span class="when">≤ Oct 19</span><span class="what"><b>Draft complete · rosters legal</b><span>Commissioner checks every roster: 15 active, ≤3 taxi, rookies correctly on taxi. First lineups set.</span></span><span class="cost">Mon</span></li>
+      <li><span class="when">~Oct 20</span><span class="what"><b>Tip-off</b><span>Season starts.</span></span><span class="cost">Tue</span></li>
+      <li><span class="when">Mid-Nov</span><span class="what"><b>Premium billed</b><span>Paid from the S$180 collected.</span></span><span class="cost">—</span></li>
+      <li><span class="when">~Mar 28<small>2027</small></span><span class="what"><b>Final · S$85 due · prizes paid</b><span>S$620 / S$250 / S$100.</span></span><span class="cost">Sun</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= 12 ================= -->
+<section class="panel" id="ballot">
+  <header class="p-head"><span class="p-num">12</span><div><h2>The ballot</h2><p>Vote in the chat by Oct 5. Founding votes pass on a simple majority of committed owners.</p></div></header>
+  <div class="eyebrow" style="margin-top:20px">Already voted · 1 October 2026</div>
+  <div class="done">
+    <span>12 teams</span><span>15 active + 3 taxi + 3 IR</span><span>One win a week</span><span>S$100 buy-in · top 3 paid</span><span>S$300 to leave without notice</span><span>Vice-commissioner: Timothy Kong</span>
+  </div>
+  <div class="eyebrow" style="margin-top:22px">Still open</div>
+  <div class="ballot-grid">
+    <div class="q"><div class="qn">1</div><h3>Pickup cap</h3><p>Hard cap on in-season acquisitions per team: 5, 8, 10 or 12?</p><div class="rec"><b>Commissioner recommends</b>12. It's a brake on streaming, not a scarcity tool. Tune it in September.</div></div>
+    <div class="q"><div class="qn">2</div><h3>Lottery</h3><p>Adopt the lottery in Rule 5.2: balls from record and consolation finish, picks 1–4 drawn, one ball for playoff teams out before the final?</p><div class="rec"><b>Commissioner recommends</b>Yes</div></div>
+  </div>
+
+  <p class="colophon">SG Shark Dynasty League · The Charter v0.2 · updated 1 October 2026 with the group's first votes<br>Amend in the September window, three-quarters of owners. Nothing here changes at any other time.</p>
+</section>
+
+</div>
+
+</body>
+</html>
